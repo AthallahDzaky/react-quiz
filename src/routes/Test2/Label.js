@@ -1,4 +1,5 @@
 import { css } from 'react-emotion';
+import { useState } from "react";
 
 const cssLabel = css({
   display: 'inline-block',
@@ -14,14 +15,28 @@ const cssLabel = css({
     padding: 0,
     border: 'none',
     outline: 'none',
+    opacity: 0,
+    cursor: 'pointer',
   }
 })
 
-const Label = () => {
+const Label = (props) => {
+  const [hovered, setHovered] = useState({opacity: 0})
+  const handleDeleteButton = (event) => {
+    props.setMessage("")
+  }
+
   return (
-    <span className={cssLabel}>
-      RENDER VALUE HERE
-      <button type="button">⊗</button>
+    <span className={cssLabel}
+      onMouseEnter={ e => {
+        setHovered({opacity: 1});
+      }}
+      onMouseLeave={ e => {
+        setHovered({opacity:0});
+      }}
+    >
+      {props.message}
+      <button type="button" onClick={handleDeleteButton} style={hovered}>⊗</button>
     </span>
   )
 }

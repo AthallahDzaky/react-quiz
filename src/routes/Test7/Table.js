@@ -1,6 +1,28 @@
+import { useImperativeHandle, forwardRef, useState, useEffect } from "react";
 import DATA from "./_data";
 
-const Table = () => {
+const Table = (props, ref) => {
+  const [data, setData] = useState([]);
+  const [filter, setFilter] = useState("");
+
+  useImperativeHandle(ref, () => ({
+    filter: (val) => {
+      setFilter(val);
+    },
+  }));
+
+  useEffect(() => {
+    if (filter) {
+      const filterData = DATA.filter((item) => {
+        return item.name.toLowerCase().indexOf(filter.toLowerCase()) > -1;
+      });
+      setData(filterData);
+    } else {
+      setData(DATA);
+    }
+  }, [filter]);
+
+
   return (
     <table>
       <thead>
@@ -11,7 +33,7 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {DATA.map((eachrow, idx) => (
+        {data.map((eachrow, idx) => (
           <tr key={idx}>
             <td>{eachrow.name}</td>
             <td>{eachrow.age}</td>
@@ -23,4 +45,4 @@ const Table = () => {
   )
 }
 
-export default Table;
+export default forwardRef(Table);

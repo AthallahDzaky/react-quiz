@@ -8,6 +8,7 @@ export const cssSpace = css({
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: 'black',
+  position: 'relative',
 });
 
 export const cssSun = css({
@@ -17,9 +18,18 @@ export const cssSun = css({
   borderRadius: 40,
 });
 
+export const cssOrbit = css({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+})
+
 export const cssPlanet = () => css({
+  position: 'absolute',
   width: 20,
   height: 20,
+  margin: 10,
+  marginRight:200,
   borderRadius: 10,
   backgroundColor: 'red',
 });

@@ -3,6 +3,8 @@ import { cssWrapper } from './style';
 
 import Comp1 from "./Comp1";
 import Comp3 from "./Comp3";
+import { useState } from 'react';
+import { createContext } from 'react';
 
 const question = (
   <ul>
@@ -25,20 +27,65 @@ const question = (
   </ul>
 );
 
+export const MyNumberContext = createContext({
+  myNumber: 0,
+  setMyNumber: () => {}
+});
+
+export const MyNumberContext2 = createContext(0)
+
 const Test5 = () => {
+  const [myNumber, setMyNumber] = useState(0);
+  const value = { myNumber, setMyNumber };
+  
+  const [oddOrEven, setOddOrEven] = useState('')
+  const handleMyNumberChange = (event) => {
+    setMyNumber(event.target.value)
+    checkOddOrEven(event.target.value)
+    setLastNumber(event.target.value)
+  }
+  const handleAddMyNumber = (_) => {
+    setMyNumber(myNumber + 1)
+    checkOddOrEven(myNumber + 1)
+    setLastNumber(myNumber + 1)
+  }
+  const handleSubMyNumber = (_) => {
+    setMyNumber(myNumber - 1)
+    checkOddOrEven(myNumber - 1)
+    setLastNumber(myNumber - 1)
+  }
+  const checkOddOrEven = (number) => {
+    if ((number % 2) === 1) {
+      setOddOrEven('Odd')
+    } else {
+      setOddOrEven('Even')
+    }
+  }
+
+  const [myNumber1, setMyNumber1] = useState(0);
+  const [lastNumber, setLastNumber] = useState(0);
+
   return(
     <div>
       {question}
-      <button id="numbermin" type="button">-</button>
-      <input id="mynumber" type="text" placeholder="input mynumber"/>
-      <button id="numberplus" type="button">+</button>
+      <MyNumberContext.Provider value={value} >
+        <button id="numbermin" type="button" onClick={handleSubMyNumber}>-</button>
+        <input id="mynumber" type="text" placeholder="input mynumber" onChange={handleMyNumberChange} value={myNumber}/>
+        <button id="numberplus" type="button" onClick={handleAddMyNumber}>+</button>
       <br/>
       <br/>
       <div className={cssWrapper}>
-        The inputted value is [ODD / EVEN]*
+        The inputted value is {oddOrEven}*
       </div>
-      <Comp1 />
+      <Comp1
+        handleMyNumber1OnChange={setMyNumber1}
+        myNumber1={myNumber1}
+        myNumber={myNumber}
+        lastNumber={lastNumber}
+        setLastNumber={setLastNumber}
+      />
       <Comp3 />
+      </MyNumberContext.Provider>
     </div>
   )
 }

@@ -1,15 +1,21 @@
 import { cssWrapper } from "./style";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Comp4 from "./Comp4";
+import { MyNumberContext, MyNumberContext2 } from "./index";
 
 const Comp3 = (/* NO PROPS ALLOWED */) => {
-  const [ showModal ] = useState(true);
+  const [ showModal, setShowModal ] = useState(false);
+  const handleOnclickModal = (_) => {
+    setShowModal(!showModal)
+  }
+
+  const {myNumber, setMyNumber} = useContext(MyNumberContext)
 
   return(
     <>
-      <div className={cssWrapper}>The Inputted Value is: ______*</div>
-      <button type="button">Show Modal</button>
+      <div className={cssWrapper}>The Inputted Value is: {myNumber}*</div>
+      <button type="button" onClick={handleOnclickModal}>Show Modal</button>
       {showModal && <Comp4/>}
     </>
   )

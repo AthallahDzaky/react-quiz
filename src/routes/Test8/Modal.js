@@ -1,13 +1,20 @@
 import { cssModal } from "./style"
 
-const Modal = () => {
+const Modal = (props) => {
   return (
-    <div className={cssModal}>
-      Name: _____
+    <div
+      className={cssModal}
+      // style={props.showingModal ? (
+      //   'display:block'
+      // ) : (
+      //   'display:none'
+      // )}
+    >
+      Name: {props.personData.name}
       <br/>
-      Age: _____
+      Age: {props.personData.age}
       <br/>
-      Address: _____
+      Address: {props.personData.address}
       <br/>
       <button>Reset</button>
     </div>

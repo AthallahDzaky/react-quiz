@@ -1,6 +1,6 @@
 // import DATA from "./_data";
 
-const Table = () => {
+const Table = (props) => {
   return (
     <table>
       <thead>
@@ -9,6 +9,13 @@ const Table = () => {
           <th>Age</th>
           <th>Address</th>
         </tr>
+        {props.data.map((item, index) => (
+          <tr>
+            <td>{item.name}</td>
+            <td>{item.age}</td>
+            <td>{item.address}</td>
+          </tr>
+        ))}
       </thead>
     </table>
   )

@@ -1,8 +1,16 @@
+const Input = (props) => {
+  const handleInputSearch = (event) => {
+    props.setSearch(event.target.value)
+  }
 
-const Input = () => {
+  const _handleOnSubmit = (event) => {
+    event.preventDefault()
+    props.triggerSearchProcess(props.search)
+  }
+
   return (
-    <form>
-      <input type="text" placeholder="search" />
+    <form onSubmit={_handleOnSubmit}>
+      <input type="text" placeholder="search" onChange={handleInputSearch} value={props.search}/>
       <button type="submit">🔍</button>
     </form>
   )
